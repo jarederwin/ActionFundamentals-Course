@@ -1,0 +1,26 @@
+name: Trigger Random Generator
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Allows you to manually click "Run workflow" in GitHub UI
+
+jobs:
+  test-our-action:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: You MUST check out the repository so GitHub can find your local action folder
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # Step 2: Reference your action using its relative directory path
+      - name: Run Random Number Generator Action
+        id: rng-step
+        uses: ./.github/actions/random-generator
+        with:
+          user-name: 'Jane Doe' # Overriding the default 'Developer' input
+
+      # Step 3: Optional - Print the random number output passed back by your action
+      - name: Print the Action Output
+        run: |
+          echo "The generated number was: ${{ steps.rng-step.outputs.generated-number }}"
