@@ -29,3 +29,10 @@ jobs:
         run: |
           echo "::warning file=app.js,line=10::This is a code warning."
           echo "::error file=app.js,line-15,col=5::Critical syntax error found!"
+
+      - name: Generate Value
+        id: generator
+        run: echo "build_id=12345" >> $GITHUB_OUTPUT
+
+      - name: Use Value
+        run: echo "The build ID is ${{ steps.generator.outputs.build_id }}
